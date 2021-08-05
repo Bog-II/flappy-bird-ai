@@ -1,7 +1,6 @@
 from images import BIRD_IMAGES
 import pygame
 
-
 class Bird:
     IMAGES = BIRD_IMAGES
     NUMBER_IMAGES = 3
@@ -73,6 +72,7 @@ class Bird:
                 topleft = (self.x, self.y)
             ).center
         )
+        
         window.blit(rotated_image, new_rect.topleft)
 
         def get_mask(self):
