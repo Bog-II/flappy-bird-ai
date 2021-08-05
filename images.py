@@ -20,3 +20,5 @@ BG_IMAGE = load_image("bg.png")
 
 PIPE_IMAGE_BOTTOM = load_image("pipe.png")
 PIPE_IMAGE_TOP = pygame.transform.flip(PIPE_IMAGE_BOTTOM, False, True)
+
+PIPE_IMAGE_HEIGHT = PIPE_IMAGE_BOTTOM.get_height()
