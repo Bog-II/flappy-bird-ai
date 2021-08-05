@@ -2,13 +2,13 @@ import pygame
 import neat
 import time
 import os
-import random
+
 
 from images import BG_IMAGE, BASE_IMAGE
 from classes.Bird import Bird
+from classes.Pipe import Pipe
 
 from constants import (WINDOW_WIDTH, WINDOW_HEIGHT)
-
 
 
 def draw_window(window, bird):
@@ -18,7 +18,7 @@ def draw_window(window, bird):
 
 
 def main():
-    bird = Bird(200, 200)
+    bird = Bird(WINDOW_WIDTH // 5, WINDOW_HEIGHT // 3)
     window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
 
@@ -27,15 +27,14 @@ def main():
     while run:
         clock.tick(30)
         for event in pygame.event.get():
-          if event.type == pygame.QUIT:
-            run = False
+            if event.type == pygame.QUIT:
+                run = False
 
-        bird.move()
+        # bird.move()
         draw_window(window, bird)
-        # draw_window(window)
-    
 
     pygame.quit()
     quit()
+
 
 main()
