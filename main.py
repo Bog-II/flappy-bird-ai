@@ -5,7 +5,7 @@ import os
 import random
 
 from images import BG_IMAGE, BASE_IMAGE
-from classes import Bird
+from classes.Bird import Bird
 
 from constants import (WINDOW_WIDTH, WINDOW_HEIGHT)
 
