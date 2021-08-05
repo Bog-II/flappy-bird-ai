@@ -10,7 +10,7 @@ class Bird:
     MAX_IMAGE_COUNT = ANIMATION_TIME * NUMBER_IMAGES
 
     MAX_ROTATION = 25
-    ROTOTATION_VELOCITY = 25
+    ROTOTATION_VELOCITY = 20
 
     def __init__(self, x, y):
         self.x = x
@@ -18,9 +18,10 @@ class Bird:
         self.tilt = 0
         self.tilt_count = 0
         self.velocity = 0
-        self.height = self.y
+        self.height = y
         self.image_count = 0
-        self.image = IMAGES[0]
+        self.image = self.IMAGES[0]
+        self.is_current_cycle_increasing = True
 
     def jump(self):
         self.velocity = -10.5
@@ -44,33 +45,35 @@ class Bird:
                 self.tilt = self.MAX_ROTATION
         else:
             if self.tilt > -90:
-                self.tilt = ROTOTATION_VELOCITY
+                self.tilt -= self.ROTOTATION_VELOCITY
 
     def draw(self, window):
-        is_current_cycle_increasing = True
 
         # 0 <= bird_image_number < 2 since 0 <= image_count < 15
-        bird_image_number = image_count // ANIMATION_TIME
-        self.image = IMAGES[bird_image_number]
+        bird_image_number = self.image_count // self.ANIMATION_TIME
+        self.image = self.IMAGES[bird_image_number]
 
-        if is_current_cycle_increasing:
+        if self.is_current_cycle_increasing:
             self.image_count += 1
-            if self.image_count == MAX_IMAGE_COUNT-1:
-                is_current_cycle_increasing = False
+            if self.image_count == self.MAX_IMAGE_COUNT-1:
+                self.is_current_cycle_increasing = False
         else:
             self.image_count -= 1
             if self.image_count == 0:
-                is_current_cycle_increasing = True
+                self.is_current_cycle_increasing = True
 
         if self.tilt <= -80:
-            self.image = IMAGES[1]
+            self.image = self.IMAGES[1]
             self.image_count = self.ANIMATION_TIME * 2
-            is_current_cycle_increasing = True
+            self.is_current_cycle_increasing = True
 
-        rotated_image = pygame.transform.roate(self.img, self.tilt)
+        rotated_image = pygame.transform.rotate(self.image, self.tilt)
         new_rect = rotated_image.get_rect(
-            center=self.img.get_rect(topLeft=(self.x, self.y)).center)
-        window.blit(rotated_image, new_rect.topLeft)
+            center = self.image.get_rect(
+                topleft = (self.x, self.y)
+            ).center
+        )
+        window.blit(rotated_image, new_rect.topleft)
 
         def get_mask(self):
             return pygame.mask.from_surface(self.image)
