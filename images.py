@@ -15,6 +15,8 @@ BIRD_IMAGES = [
 ]
 
 
-PIPE_IMAGE = load_image("pipe.png")
 BASE_IMAGE = load_image("base.png")
 BG_IMAGE = load_image("bg.png")
+
+PIPE_IMAGE_BOTTOM = load_image("pipe.png")
+PIPE_IMAGE_TOP = pygame.transform.flip(PIPE_IMAGE_BOTTOM, False, True)
