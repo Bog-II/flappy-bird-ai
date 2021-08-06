@@ -1,5 +1,7 @@
 from images import BIRD_IMAGES
+from constants import BASE_HEIGHT
 import pygame
+
 
 class Bird:
     IMAGES = BIRD_IMAGES
@@ -23,7 +25,7 @@ class Bird:
         self.is_current_cycle_increasing = True
 
     def jump(self):
-        self.velocity = -10.5
+        self.velocity = -10
         self.tilt_count = 0
         self.height = self.y
 
@@ -68,12 +70,26 @@ class Bird:
 
         rotated_image = pygame.transform.rotate(self.image, self.tilt)
         new_rect = rotated_image.get_rect(
-            center = self.image.get_rect(
-                topleft = (self.x, self.y)
+            center=self.image.get_rect(
+                topleft=(self.x, self.y)
             ).center
         )
-        
+
         window.blit(rotated_image, new_rect.topleft)
 
-        def get_mask(self):
-            return pygame.mask.from_surface(self.image)
+    def get_mask(self):
+        return pygame.mask.from_surface(self.image)
+
+    def is_dead(self, last_passed_pipe, first_not_passed_pipe):
+
+        is_bird_colliding_last_passed_pipe = False
+        if (last_passed_pipe != None):
+            is_bird_colliding_last_passed_pipe = last_passed_pipe.collide(self)
+
+        is_bird_colliding_pipes = is_bird_colliding_last_passed_pipe | first_not_passed_pipe.collide(
+            self)
+
+        is_bird_colliding_floor = (self.y >= BASE_HEIGHT)
+        is_bird_colligind_ceil = (self.y <= 0)
+
+        return is_bird_colliding_pipes | is_bird_colliding_floor | is_bird_colligind_ceil
