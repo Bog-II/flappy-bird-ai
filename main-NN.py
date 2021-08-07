@@ -93,32 +93,18 @@ def eval_genomes(genomes, config):
         for pipe in not_passed_pipes:
             for bird_index, bird in enumerate(birds):
                 if (bird.is_dead(last_passed_pipe, first_not_passed_pipe)):
-                    # run = False
                     bird_genomes[bird_index].fitness -= 0.1
                     NNs.pop(bird_index)
                     bird_genomes.pop(bird_index)
                     birds.pop(bird_index)
                 else:
-                    # output = NNs[bird_index].activate((bird.y, pipe.height, pipe.bottom))
-                    # output = NNs[bird_index].activate((bird.y, abs(bird.y - pipe.height), abs(bird.y - pipe.bottom)))
-
                     fnpp = first_not_passed_pipe
-
-                    # output = NNs[bird_index].activate(
-                    #     (bird.y, fnpp.height, fnpp.bottom, fnpp.velocity, fnpp.gap, fnpp.x))      
-
-                    # output = NNs[bird_index].activate(
-                    #     (bird.y, fnpp.height, fnpp.bottom))    
                     output = NNs[bird_index].activate(
                         (bird.y, fnpp.height, fnpp.bottom))    
                     
-                    # we use a relu activation function so result will be between 0 and +oo. if over 0 jump
+                    # we use a relu activation function so result will be between 0 and +oo. if over 50 jump
                     if output[0] > 50:
                         bird.jump()
-
-                    # we use a relu activation function so result will be between 0 and +oo. if over 0 jump
-                    # if output[0] > 0.5:
-                    #     bird.jump()
 
                     bird_genomes[bird_index].fitness += 0.5
                     bird.move()
