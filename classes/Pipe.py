@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from constants import WINDOW_HEIGHT, BASE_HEIGHT, WINDOW_WIDTH
+from constants import WINDOW_HEIGHT, BASE_HEIGHT, WINDOW_WIDTH, BIRD_SPEED
 from images import (PIPE_IMAGE_TOP,
                     PIPE_IMAGE_BOTTOM,
                     PIPE_IMAGE_HEIGHT
@@ -9,18 +9,22 @@ from images import (PIPE_IMAGE_TOP,
 
 
 def get_random_gap():
-    return random.randrange(150, 220)
+    return random.randrange(180, 220)
 
-def random_x_pipe():
-    return random.randrange(WINDOW_WIDTH-80, WINDOW_WIDTH)
+def get_random_x_pipe():
+    return random.randrange(WINDOW_WIDTH, WINDOW_WIDTH + 30)
+
+def get_random_velocity():
+    return BIRD_SPEED + random.randrange(0, BIRD_SPEED)
+
 
 class Pipe:
-    VELOCITY = 5
 
     def __init__(self):
-        self.x = random_x_pipe()
+        self.velocity = get_random_velocity()
+        self.x = get_random_x_pipe()
         self.height = 0
-        self.gap = 100
+        self.gap = get_random_gap()
         self.PIPE_BOTTOM = PIPE_IMAGE_BOTTOM
         self.PIPE_TOP = PIPE_IMAGE_TOP
         self.top = 0
@@ -29,13 +33,12 @@ class Pipe:
         self.set_height()
 
     def set_height(self):
-        curr_gap = get_random_gap()
-        self.height = random.randrange(0, BASE_HEIGHT - curr_gap)
+        self.height = random.randrange(0, BASE_HEIGHT - self.gap)
         self.top = self.height - PIPE_IMAGE_HEIGHT
-        self.bottom = self.height + curr_gap
+        self.bottom = self.height + self.gap
 
     def move(self):
-        self.x -= self.VELOCITY
+        self.x -= self.velocity
 
     def draw(self, window):
         window.blit(self.PIPE_TOP, (self.x, self.top))
@@ -52,10 +55,8 @@ class Pipe:
         tPoint = bird_mask.overlap(top_mask, top_offset)
         bPoint = bird_mask.overlap(bottom_mask, bottom_offset)
 
-
-
         return (tPoint != None) | (bPoint != None)
 
         # if (tPoint == None) & (bPoint == None):
         #     return False
-        # return True       
+        # return True

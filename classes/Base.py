@@ -4,7 +4,6 @@ from images import (BASE_IMAGE,
 
 
 class Base:
-    VELOCITY = 5
 
     def __init__(self):
         self.y = BASE_HEIGHT

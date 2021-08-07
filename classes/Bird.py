@@ -1,14 +1,14 @@
 from images import BIRD_IMAGES
-from constants import BASE_HEIGHT
+from constants import BASE_HEIGHT, BIRD_SPEED
 import pygame
 
 
 class Bird:
     IMAGES = BIRD_IMAGES
     NUMBER_IMAGES = 3
-    ANIMATION_TIME = 5
+    ANIMATION_TIME = 6
 
-    MAX_IMAGE_COUNT = ANIMATION_TIME * NUMBER_IMAGES
+    MAX_IMAGE_COUNT = BIRD_SPEED * NUMBER_IMAGES
 
     MAX_ROTATION = 25
     ROTOTATION_VELOCITY = 20
@@ -51,7 +51,7 @@ class Bird:
     def draw(self, window):
 
         # 0 <= bird_image_number < 2 since 0 <= image_count < 15
-        bird_image_number = self.image_count // self.ANIMATION_TIME
+        bird_image_number = self.image_count // BIRD_SPEED
         self.image = self.IMAGES[bird_image_number]
 
         if self.is_current_cycle_increasing:
@@ -65,7 +65,7 @@ class Bird:
 
         if self.tilt <= -80:
             self.image = self.IMAGES[1]
-            self.image_count = self.ANIMATION_TIME * 2
+            self.image_count = BIRD_SPEED * 2
             self.is_current_cycle_increasing = True
 
         rotated_image = pygame.transform.rotate(self.image, self.tilt)
