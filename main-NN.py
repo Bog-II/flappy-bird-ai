@@ -113,12 +113,12 @@ def eval_genomes(genomes, config):
                         (bird.y, fnpp.height, fnpp.bottom))    
                     
                     # we use a relu activation function so result will be between 0 and +oo. if over 0 jump
-                    # if output[0] > 3:
-                    #     bird.jump()
+                    if output[0] > 50:
+                        bird.jump()
 
                     # we use a relu activation function so result will be between 0 and +oo. if over 0 jump
-                    if output[0] > 0.5:
-                        bird.jump()
+                    # if output[0] > 0.5:
+                    #     bird.jump()
 
                     bird_genomes[bird_index].fitness += 0.5
                     bird.move()
